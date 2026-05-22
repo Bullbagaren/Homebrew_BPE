@@ -1,6 +1,8 @@
 import re
+import os
 from collections import Counter
 from itertools import pairwise
+import pickle
 
 class BpeTrain(): 
     def __init__(self) -> None:
@@ -41,9 +43,16 @@ class BpeTrain():
             print("no pairs left without crossing whitespace")
             return False
 
+    def save(self, save_path="./"):
+        vocab_path = os.path.join(save_path, "vocab.pkl")
+        rules_path = os.path.join(save_path, "rules.pkl")
 
+        pickle.dump(self.vocab, open(vocab_path, 'wb'))
+        pickle.dump(self.vocab, open(rules_path, 'wb'))
 
-
+    def load(self, vocab, rules):
+        self.vocab = pickle.load(open(vocab, 'rb'))
+        self.rules = pickle.load(open(rules, 'rb'))
     
     def apply_rules(self, text):
         text = re.sub(r'(\s+)', "_", text)
@@ -65,12 +74,17 @@ def main():
     for i in range(15):
            if bpe.pair_counting() == False:
                break
-
+    
+    
 
     
-    print(bpe.corpus)
 
-
+    bpe.save()
+    
+    bpe2 = BpeTrain()
+    bpe2.load("vocab.pkl", "rules.pkl")
+    print(bpe2.rules)
+    print(bpe2.vocab)
 
 
 
