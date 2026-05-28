@@ -1,2 +1,4 @@
 *.ini
 *.pkl
+*.pyc
+*.bak
