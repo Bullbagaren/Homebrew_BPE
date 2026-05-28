@@ -12,7 +12,7 @@ class BpeTrain():
         self.rules = []
 
     def create_vocab(self, text):
-        text = re.sub(r'(\s+)', "_", text)
+        #text = re.sub(r'(\s+)', "_", text)
         self.vocab.update(set(text))
         self.corpus.extend(list(text))
         self.corpus_len = len(self.corpus)
@@ -21,7 +21,7 @@ class BpeTrain():
         pairs = Counter(pairwise(self.corpus)).most_common()
         for pair in pairs:
             chars = pair[0]
-            if len(chars[0]) > 1 and ("_" in chars[0] and chars[0][-1] =="_"):
+            if len(chars[0]) > 1 and (" " in chars[0] and chars[0][-1] ==" "):
                 continue
             else:
                 selected = chars
